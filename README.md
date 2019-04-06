@@ -8,8 +8,8 @@ This repository contains supplemetary code for paper *REPAIR: Removing Represent
 
 ### Supported features
 - Generating colored MNIST data by **coloring** handwritten digits of MNIST
-- **Measure** color bias of the colored MNIST dataset *(Equation 3 in paper)*
-- **Remove** color bias of dataset with REPAIR resampling *(Equation 10/11 in paper)*
+- **Measure** color bias of the colored MNIST dataset
+- **Remove** color bias of dataset with REPAIR resampling
 - Evaluate **generalization** of models trained on colored MNIST
 
 ### Features to come
