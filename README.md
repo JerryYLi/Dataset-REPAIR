@@ -4,19 +4,13 @@ This repository contains supplemetary code for paper *REPAIR: Removing Represent
 <!-- ## Overview -->
 
 #### What is representation bias?
-Representation bias [2] captures the bias of a dataset, in that it is easier to solve using some data representations than others. If a representation is particularly useful for solving dataset D, we say that D is biased towards this representation. 
-
-(Examples?)
+Representation bias [2] captures the bias of a dataset, in that it is easier to solve using some data representations than others. If a representation is particularly useful for solving dataset D, we say that D is biased towards this representation.
 
 #### What is REPAIR? 
 *REPAIR* is a dataset resampling algorithm proposed to reduce *representation bias* of datasets. It learns a set of example-level weights for the dataset that minimizes the bias under reweighting. Based on these weights we obtain the resampled dataset, hopefully with reduced bias, by keeping only a subset of examples (discarding the rest).
 
-(Examples of resampled data?)
-
 #### Why remove the bias?
 Neural network models learned on REPAIRed datasets (with bias removed) are shown to generalize better, under domains where such bias is not present. We hypothesize that this is because neural nets trained on biased data will rely on such bias to classify examples, thereby "overfitting" to the bias.
-
-(Colored MNIST illustrations?)
 
 ---
 
@@ -27,9 +21,8 @@ Neural network models learned on REPAIRed datasets (with bias removed) are shown
 - Evaluate **generalization** of models trained on colored MNIST
 
 ### Features to come
-- Comparison between resampling strategies
-- Static bias measurement and removal in **action recognition** datasets: UCF101, HMDB51, Kinetics
-- REPAIRed datasets and pre-trained models on them
+- Static bias measurement and removal on **action recognition** datasets: UCF101, HMDB51, Kinetics
+- REPAIRed action recognition datasets and **pre-trained models** on them
 - **Generic REPAIR tool** for any dataset and representation bias
 
 ---
