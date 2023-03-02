@@ -29,7 +29,7 @@ train_loader = DataLoader(colored_train_set, batch_size=args.batch_size, shuffle
 colored_test_set = ColoredDataset(test_set, classes=10, colors=colored_train_set.colors, std=args.color_std)
 test_loader = DataLoader(colored_test_set, batch_size=args.batch_size, shuffle=False, num_workers=4, pin_memory=True)
 
-# grount-truth datasets, i.e. grayscale mnist
+# ground-truth datasets, i.e. grayscale mnist
 gt_train_set = ColoredDataset(train_set, classes=10, colors=[1, 1], std=0)
 gt_train_loader = DataLoader(gt_train_set, batch_size=args.batch_size, shuffle=True, num_workers=4, pin_memory=True)
 gt_test_set = ColoredDataset(test_set, classes=10, colors=[1, 1], std=0)
