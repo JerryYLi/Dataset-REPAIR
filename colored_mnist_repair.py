@@ -76,7 +76,7 @@ train_loader = DataLoader(colored_train_set, batch_size=args.batch_size, shuffle
 colored_test_set = ColoredDataset(test_set, classes=10, colors=colored_train_set.colors, std=args.color_std)
 test_loader = DataLoader(colored_test_set, batch_size=args.batch_size, shuffle=False, num_workers=args.num_workers, pin_memory=True)
 
-# grount-truth datasets, i.e. grayscale mnist
+# ground-truth datasets, i.e. grayscale mnist
 gt_train_set = ColoredDataset(train_set, classes=10, colors=[1, 1], std=0)
 gt_train_loader = DataLoader(gt_train_set, batch_size=args.batch_size, shuffle=True, num_workers=args.num_workers, pin_memory=True)
 gt_test_set = ColoredDataset(test_set, classes=10, colors=[1, 1], std=0)
@@ -85,9 +85,9 @@ gt_test_loader = DataLoader(gt_test_set, batch_size=args.batch_size, shuffle=Fal
 # measure bias & generalization before resampling
 color_fn = lambda x: x.view(x.size(0), x.size(1), -1).max(2)[0]  # color of digit
 color_dim = 3  # rgb
-bias_0 = measure_bias(train_loader, test_loader, color_fn, color_dim)[0]
+bias_0 = measure_bias(train_loader, test_loader, color_fn, color_dim, args.epochs, args.lr)[0]
 model = create_mnist_model(args.model)
-gt_acc_0 = measure_generalization(train_loader, [test_loader, gt_test_loader], model)[1]
+gt_acc_0 = measure_generalization(train_loader, [test_loader, gt_test_loader], model, args.epochs, args.lr)[1]
 print('Color bias before resampling = {:.3f}'.format(bias_0 + 0))
 print('Generalization accuracy before resampling = {:.2%}'.format(gt_acc_0))
 
@@ -96,8 +96,8 @@ repair_dataset = IndexedDataset(ConcatDataset([colored_train_set, colored_test_s
 train_loader = DataLoader(repair_dataset, batch_size=args.batch_size, shuffle=True, num_workers=args.num_workers, pin_memory=True)
 w, q, cls_idx, cls_w, bias = repair(train_loader, color_fn, color_dim, args.epochs, args.lr, args.lr_w)
 
-# plot histogram of reampling weights
-sns.distplot(w.cpu(), bins=100, kde=False)
+# plot histogram of resampling weights
+sns.histplot(w.cpu(), bins=100, kde=False)
 plt.xlabel('Resampling weights')
 plt.ylabel('# Examples')
 plt.show()
@@ -112,9 +112,9 @@ train_loader = DataLoader(Subset(colored_train_set, keep_idx_train), batch_size=
 test_loader = DataLoader(Subset(colored_test_set, keep_idx_test), batch_size=args.batch_size, shuffle=False, num_workers=args.num_workers, pin_memory=True)
 
 # Measure bias & generalization after resampling
-bias_1 = measure_bias(train_loader, test_loader, color_fn, color_dim)[0]
+bias_1 = measure_bias(train_loader, test_loader, color_fn, color_dim, args.epochs, args.lr)[0]
 model = create_mnist_model(args.model)
-gt_acc_1 = measure_generalization(train_loader, [test_loader, gt_test_loader], model)[1]
+gt_acc_1 = measure_generalization(train_loader, [test_loader, gt_test_loader], model, args.epochs, args.lr)[1]
 print('Color bias after resampling = {:.3f}'.format(bias_1 + 0))
 print('Generalization accuracy after resampling = {:.2%}'.format(gt_acc_1))
 
